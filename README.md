@@ -1,2 +1,2 @@
 # closure-grammar
-A grammar for closure templates, written in ANTLR
+A grammar for closure templates, written for ANTLR
