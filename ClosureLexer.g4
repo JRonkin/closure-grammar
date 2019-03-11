@@ -43,7 +43,7 @@ Text:                ~[{}]+;
 
 /// Command attributes
 Equals:              '=';
-DoubleString:        '"' ('\\"' | .)*? '"';
+DoubleQuote:         '"';
 
 /// Expression values
 Null:                'null';
@@ -65,7 +65,6 @@ LeftBracket:         '[';
 RightBracket:        ']';
 
 /// Expression operations
-Negate:              '-';
 Mul:                 '*';
 Div:                 '/';
 Mod:                 '%';
@@ -76,7 +75,7 @@ NotEq:               '!=';
 Lt:                  '<';
 Gt:                  '>';
 Lte:                 '<=';
-Gte:                 '>=':
+Gte:                 '>=';
 Not:                 'not';
 Or:                  'or';
 And:                 'and';
@@ -88,7 +87,7 @@ RightParen:          ')';
 /// Soy doc
 SoyDocStart:         '/**';
 SoyDocParam:         '@param';
-SoyDocOptionalParam: '@param?'
+SoyDocOptionalParam: '@param?';
 SoyDocEnd:           '*/';
 Comment:             '//' ~'\n'* | '/*' .*? '*/';
 
@@ -149,3 +148,4 @@ LogEnd:              '{/log}';
 /// Built-in identifiers
 As:                  'as';
 In:                  'in';
+Range:               'range';

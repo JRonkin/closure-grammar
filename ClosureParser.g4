@@ -65,88 +65,89 @@ deltemplate
 
 /// Commands
 
-call
-  : LeftDelim Call templateNamespace? templateName attribute* (RightDelimEnd | RightDelim param* CallEnd)
+callCmd
+  : LeftDelim Call templateNamespace? templateName attribute* (RightDelimEnd | RightDelim paramCmd* CallEnd)
   ;
 
-css
+cssCmd
   : LeftDelim Css String RightDelim
   ;
 
-delcall
-  : LeftDelim Delcall delTemplateName attribute* (RightDelimEnd | RightDelim param* DelcallEnd)
+delcallCmd
+  : LeftDelim Delcall delTemplateName attribute* (RightDelimEnd | RightDelim paramCmd* DelcallEnd)
   ;
 
-for
-  : LeftDelim For variable In 'range' LeftParen expressionList RightParen RightDelim block ForEnd
+forCmd
+  : LeftDelim For variable In Range LeftParen expressionList RightParen RightDelim block ForEnd
   ;
 
-foreach
-  : LeftDelim For variable In expression RightDelim block ifempty? ForeachEnd
+foreachCmd
+  : LeftDelim For variable In expression RightDelim block ifemptyCmd? ForeachEnd
   ;
 
-if
-  : LeftDelim If expression RightDelim block elseif* else? IfEnd
+ifCmd
+  : LeftDelim If expression RightDelim block elseifCmd* elseCmd? IfEnd
   ;
 
-let
+letCmd
   : LeftDelim Let variable (Colon expression RightDelimEnd | RightDelim block LetEnd)
   ;
 
-literal
+literalCmd
   : LeftDelim Literal RightDelim .*? LiteralEnd
   ;
 
-msg
-  : LeftDelim Msg attribute* RightDelim (block | plural) fallbackmsg? MsgEnd
+msgCmd
+  : LeftDelim Msg attribute* RightDelim (block | pluralCmd) fallbackmsgCmd? MsgEnd
   ;
 
-print
+printCmd
   : LeftDelim Print? expression printDirective* RightDelim
   ;
 
-switch
-  : LeftDelim Switch expression RightDelim case* default? SwitchEnd
+switchCmd
+  : LeftDelim Switch expression RightDelim caseCmd* defaultCmd? SwitchEnd
   ;
 
 // xid not supported in robfig's soy2js
-xid
+xidCmd
   : LeftDelim Xid String RightDelim
   ;
 
 
 /// Subcommands
 
-case
+caseCmd
   : LeftDelim Case expressionList RightDelim block
   ;
 
-default
+defaultCmd
   : LeftDelim Default RightDelim block
   ;
 
-else
+elseCmd
   : LeftDelim Else RightDelim block
   ;
 
-elseif
+elseifCmd
   : LeftDelim Elseif expression RightDelim block
   ;
 
 // fallbackmsg not supported in robfig's soy2js
-fallbackmsg
+fallbackmsgCmd
   : LeftDelim Fallbackmsg attribute* RightDelim block
+  ;
 
-ifempty
+ifemptyCmd
   : LeftDelim Ifempty RightDelim block
   ;
 
-param
+paramCmd
   : LeftDelim Param Identifier (Colon expression RightDelimEnd | RightDelim block ParamEnd)
   ;
 
-plural
-  : LeftDelim Plural expression RightDelim case* default? PluralEnd
+pluralCmd
+  : LeftDelim Plural expression RightDelim caseCmd* defaultCmd? PluralEnd
   ;
 
 
@@ -157,18 +158,18 @@ block
   ;
 
 command
-  : call
-  | css
-  | delcall
-  | for
-  | foreach
-  | if
-  | let
-  | literal
-  | print
-  | msg
-  | switch
-  | xid
+  : callCmd
+  | cssCmd
+  | delcallCmd
+  | forCmd
+  | foreachCmd
+  | ifCmd
+  | letCmd
+  | literalCmd
+  | printCmd
+  | msgCmd
+  | switchCmd
+  | xidCmd
   ;
 
 characterCommand
@@ -208,30 +209,30 @@ printDirective
   : Pipe Identifier (Colon expressionList)?
   ;
 
-expression
-  : Null
-  | Bool
-  | Integer
-  | Float
-  | String
-  | list
-  | map
-  | dataRef
-  | Identifier LeftParen expressionList RightParen  # FunctionCallExpression
-  | LeftParen expression RightParen                 # ParenthesizedExpression
-  | Not expression                                  # NotExpression
-  | Negate expression                               # NegativeExpression
-  | expression (Mul | Div | Mod) expression         # MultiplicativeExpression
-  | expression (Add | Sub) expression               # AdditiveExpression
-  | expression (Lt | Gt | Lte | Gte) expression     # RelationalExpression
-  | expression (Eq | NotEq) expression              # EqualityExpression
-  | expression And expression                       # AndExpression
-  | expression Or expression                        # OrExpression
-  | expressoin Elvis expression | ternaryExpression # ConditionalExpression
-  ;
-
 expressionList
   : expression (Comma expression)*
+  ;
+
+expression
+  : Null                                                      # NullExpression
+  | Bool                                                      # BoolExpression
+  | Integer                                                   # IntegerExpression
+  | Float                                                     # FloatExpression
+  | String                                                    # StringExpression
+  | list                                                      # ListExpression
+  | map                                                       # MapExpression
+  | dataRef                                                   # DataRefExpression
+  | Identifier LeftParen expressionList RightParen            # FunctionCallExpression
+  | LeftParen expression RightParen                           # ParenthesizedExpression
+  | Not expression                                            # NotExpression
+  | Sub expression                                            # NegativeExpression
+  | expression (Mul | Div | Mod) expression                   # MultiplicativeExpression
+  | expression (Add | Sub) expression                         # AdditiveExpression
+  | expression (Lt | Gt | Lte | Gte) expression               # RelationalExpression
+  | expression (Eq | NotEq) expression                        # EqualityExpression
+  | expression And expression                                 # AndExpression
+  | expression Or expression                                  # OrExpression
+  | expression (Elvis | Question expression Colon) expression # ConditionalExpression
   ;
 
 
@@ -246,7 +247,7 @@ map
   ;
 
 mapEntryList
-  : mapEntryList (Comma mapEntryList)*
+  : mapEntry (Comma mapEntry)*
   ;
 
 mapEntry
