@@ -38,16 +38,16 @@ LeftDelim:           '{';
 RightDelim:          '}';
 RightDelimEnd:       '/}';
 
-/// Literal text
-Text:                .*? ~'{/literal}';
+/// Text
+Text:                ~[{}]+;
 
-/// Tag attributes
+/// Command attributes
 Equals:              '=';
 DoubleString:        '"' ('\\"' | .)*? '"';
 
 /// Expression values
 Null:                'null';
-Bool:                ('true' | 'false');
+Bool:                'true' | 'false';
 Integer:             ([0-9]+ | '0x' [0-9A-F]+);
 Float:               [0-9]+ (('.' [0-9]+)? 'e' '-'? | '.') [0-9]+;
 String:              '\'' ('\\\'' | .)*? '\'';
@@ -73,10 +73,10 @@ Add:                 '+';
 Sub:                 '-';
 Eq:                  '==';
 NotEq:               '!=';
-Gt:                  '>';
-Gte:                 '>=':
 Lt:                  '<';
+Gt:                  '>';
 Lte:                 '<=';
+Gte:                 '>=':
 Not:                 'not';
 Or:                  'or';
 And:                 'and';
@@ -90,7 +90,7 @@ SoyDocStart:         '/**';
 SoyDocParam:         '@param';
 SoyDocOptionalParam: '@param?'
 SoyDocEnd:           '*/';
-Comment:             ('//' ~'\n'* | '/*' .*? '*/');
+Comment:             '//' ~'\n'* | '/*' .*? '*/';
 
 /// Commands
 Alias:               'alias';
@@ -103,6 +103,7 @@ Delpackage:          'delpackage';
 Deltemplate :        'deltamplate';
 Else:                'else';
 Elseif:              'elseif';
+Fallbackmsg:         'fallbackmsg';
 For:                 'for';
 Foreach:             'foreach';
 If:                  'if';
@@ -116,6 +117,7 @@ Plural:              'plural';
 Print:               'print';
 Switch:              'switch';
 Template:            'template';
+Xid:                 'xid';
 Log:                 'log';
 Debugger:            'debugger';
 
@@ -143,3 +145,7 @@ PluralEnd:           '{/plural}';
 SwitchEnd:           '{/switch}';
 TemplateEnd:         '{/template}';
 LogEnd:              '{/log}';
+
+/// Built-in identifiers
+As:                  'as';
+In:                  'in';
