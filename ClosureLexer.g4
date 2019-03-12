@@ -149,3 +149,6 @@ LogEnd:              '{/log}';
 As:                  'as';
 In:                  'in';
 Range:               'range';
+
+/// Whitespace
+Whitespace:          [ \t\r\n]+ -> channel(HIDDEN);
