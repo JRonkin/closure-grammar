@@ -28,25 +28,25 @@
 parser grammar ClosureParser;
 
 options {
-  tokenVocab=ClosureLexer;
-  superClass=ClosureBaseParser;
+  tokenVocab = ClosureLexer;
+  superClass = ClosureBaseParser;
 }
 
 /// File
 
-file
-  : delpackage? namespace (alias | Comment)* (soyDoc? template | Comment)* EOF
+soyFile
+  : delpackageCmd? namespaceCmd (aliasCmd | Comment)* (soyDoc? templateCmd | Comment)* EOF
   ;
 
-delpackage
+delpackageCmd
   : LeftDelim Delpackage Identifier RightDelim
   ;
 
-namespace
+namespaceCmd
   : LeftDelim Namespace templateNamespace attribute* RightDelim
   ;
 
-alias
+aliasCmd
   : LeftDelim Alias templateNamespace As Identifier RightDelim
   ;
 
@@ -54,11 +54,11 @@ soyDoc
   : SoyDocStart .*? ((SoyDocOptionalParam | SoyDocParam) Identifier .*?)*? SoyDocEnd
   ;
 
-template
+templateCmd
   : LeftDelim Template templateName attribute* RightDelim block TemplateEnd
   ;
 
-deltemplate
+deltemplateCmd
   : LeftDelim Deltemplate delTemplateName attribute* RightDelim block DeltemplateEnd
   ;
 
@@ -70,7 +70,7 @@ callCmd
   ;
 
 cssCmd
-  : LeftDelim Css String RightDelim
+  : LeftDelim Css StringLiteral RightDelim
   ;
 
 delcallCmd
@@ -78,11 +78,7 @@ delcallCmd
   ;
 
 forCmd
-  : LeftDelim For variable In Range LeftParen expressionList RightParen RightDelim block ForEnd
-  ;
-
-foreachCmd
-  : LeftDelim For variable In expression RightDelim block ifemptyCmd? ForeachEnd
+  : LeftDelim (For | Foreach) variable In expression RightDelim block ifemptyCmd? (ForEnd | ForeachEnd)
   ;
 
 ifCmd
@@ -111,7 +107,7 @@ switchCmd
 
 // xid not supported in robfig's soy2js
 xidCmd
-  : LeftDelim Xid String RightDelim
+  : LeftDelim Xid StringLiteral RightDelim
   ;
 
 
@@ -162,7 +158,6 @@ command
   | cssCmd
   | delcallCmd
   | forCmd
-  | foreachCmd
   | ifCmd
   | letCmd
   | literalCmd
@@ -214,13 +209,13 @@ expressionList
   ;
 
 expression
-  : Null                                                      # NullExpression
-  | Bool                                                      # BoolExpression
-  | Integer                                                   # IntegerExpression
-  | Float                                                     # FloatExpression
-  | String                                                    # StringExpression
-  | list                                                      # ListExpression
-  | map                                                       # MapExpression
+  : NullLiteral                                               # NullExpression
+  | BoolLiteral                                               # BoolExpression
+  | IntegerLiteral                                            # IntegerExpression
+  | FloatLiteral                                              # FloatExpression
+  | StringLiteral                                             # StringExpression
+  | listLiteral                                               # ListExpression
+  | mapLiteral                                                # MapExpression
   | dataRef                                                   # DataRefExpression
   | Identifier LeftParen expressionList RightParen            # FunctionCallExpression
   | LeftParen expression RightParen                           # ParenthesizedExpression
@@ -238,11 +233,11 @@ expression
 
 /// Non-primitive data types
 
-list
+listLiteral
   : LeftBracket expressionList? RightBracket
   ;
 
-map
+mapLiteral
   : LeftBracket (mapEntryList | Colon) RightBracket
   ;
 
@@ -251,7 +246,7 @@ mapEntryList
   ;
 
 mapEntry
-  : String Colon expression
+  : StringLiteral Colon expression
   ;
 
 variable

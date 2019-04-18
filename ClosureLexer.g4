@@ -46,11 +46,11 @@ Equals:              '=';
 DoubleQuote:         '"';
 
 /// Expression values
-Null:                'null';
-Bool:                'true' | 'false';
-Integer:             ([0-9]+ | '0x' [0-9A-F]+);
-Float:               [0-9]+ (('.' [0-9]+)? 'e' '-'? | '.') [0-9]+;
-String:              '\'' ('\\\'' | .)*? '\'';
+NullLiteral:         'null';
+BoolLiteral:         'true' | 'false';
+IntegerLiteral:      ([0-9]+ | '0x' [0-9A-F]+);
+FloatLiteral:        [0-9]+ (('.' [0-9]+)? 'e' '-'? | '.') [0-9]+;
+StringLiteral:       '\'' ('\\\'' | .)*? '\'';
 
 Comma:               ',';
 Colon:               ':';
@@ -148,7 +148,6 @@ LogEnd:              '{/log}';
 /// Built-in identifiers
 As:                  'as';
 In:                  'in';
-Range:               'range';
 
 /// Whitespace
 Whitespace:          [ \t\r\n]+ -> channel(HIDDEN);
