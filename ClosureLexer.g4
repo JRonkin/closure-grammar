@@ -30,7 +30,6 @@ lexer grammar ClosureLexer;
 channels { ERROR }
 
 options {
-  superClass=ClosureBaseLexer;
 }
 
 /// Command delimiters

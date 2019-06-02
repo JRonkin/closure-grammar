@@ -29,7 +29,6 @@ parser grammar ClosureParser;
 
 options {
   tokenVocab = ClosureLexer;
-  superClass = ClosureBaseParser;
 }
 
 /// File
