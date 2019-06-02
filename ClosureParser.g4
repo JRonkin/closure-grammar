@@ -78,7 +78,11 @@ delcallCmd
   ;
 
 forCmd
-  : LeftDelim (For | Foreach) variable In expression RightDelim block ifemptyCmd? (ForEnd | ForeachEnd)
+  : LeftDelim For variable In Range LeftParen expressionList RightParen RightDelim block ifemptyCmd? ForEnd
+  ;
+
+foreachCmd
+  : LeftDelim Foreach variable In expression RightDelim block ifemptyCmd? ForeachEnd
   ;
 
 ifCmd
