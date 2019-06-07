@@ -37,9 +37,6 @@ LeftDelim:           '{';
 RightDelim:          '}';
 RightDelimEnd:       '/}';
 
-/// Text
-Text:                ~[{}]+;
-
 /// Command attributes
 Equals:              '=';
 DoubleQuote:         '"';
@@ -54,14 +51,6 @@ StringLiteral:       '\'' ('\\\'' | .)*? '\'';
 Comma:               ',';
 Colon:               ':';
 Pipe:                '|';
-
-/// Data ref access tokens
-Identifier:          [0-9A-Za-z_]+;
-Dollar:              '$';
-Dot:                 '.';
-Question:            '?';
-LeftBracket:         '[';
-RightBracket:        ']';
 
 /// Expression operations
 Mul:                 '*';
@@ -148,6 +137,18 @@ LogEnd:              '{/log}';
 As:                  'as';
 In:                  'in';
 Range:               'range';
+
+/// Data ref access tokens
+Identifier:          [0-9A-Za-z_]+;
+Dollar:              '$';
+Dot:                 '.';
+Question:            '?';
+LeftBracket:         '[';
+RightBracket:        ']';
+
+/// Text
+// TODO: fix this rule taking precedence by matching anything
+// Text:                ~[{}]+;
 
 /// Whitespace
 Whitespace:          [ \t\r\n]+ -> channel(HIDDEN);
