@@ -87,7 +87,7 @@ Css:                 'css';
 Default:             'default';
 Delcall:             'delcall';
 Delpackage:          'delpackage';
-Deltemplate :        'deltamplate';
+Deltemplate:         'deltemplate';
 Else:                'else';
 Elseif:              'elseif';
 Fallbackmsg:         'fallbackmsg';
