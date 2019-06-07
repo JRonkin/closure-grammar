@@ -139,7 +139,7 @@ In:                  'in';
 Range:               'range';
 
 /// Data ref access tokens
-Identifier:          [0-9A-Za-z_]+;
+Identifier:          [A-Za-z_][0-9A-Za-z_]*; // TODO: soy identifiers can start with a digit
 Dollar:              '$';
 Dot:                 '.';
 Question:            '?';
