@@ -46,7 +46,7 @@ NullLiteral:         'null';
 BoolLiteral:         'true' | 'false';
 IntegerLiteral:      ([0-9]+ | '0x' [0-9A-F]+);
 FloatLiteral:        [0-9]+ (('.' [0-9]+)? 'e' '-'? | '.') [0-9]+;
-StringLiteral:       '\'' ('\\\'' | .)*? '\'';
+StringLiteral:       '\'' ('\\' . | .)*? '\'';
 
 Comma:               ',';
 Colon:               ':';
